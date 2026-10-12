@@ -14,7 +14,7 @@
 | Loại sản phẩm | Web quản lý |
 | Ý tưởng gốc | 2.4 · Quản lý kho: xuất nhập tồn (`ZDOCS/02-KE-HOACH/DANH-SACH-Y-TUONG.md`) |
 | Người phụ trách | |
-| Trạng thái | Mới tạo từ khuôn mẫu |
+| Trạng thái | Có tài liệu nghiệp vụ (SRS, use case, kịch bản demo, kịch bản kiểm thử), chưa code |
 
 ## 2. Vấn đề của khách hàng
 
@@ -44,12 +44,18 @@
 | Area | Chức năng | Màn hình (route FE dự kiến) | Ưu tiên |
 | :--- | :--- | :--- | :---: |
 | `System` | Đăng nhập, tài khoản, vai trò, cài đặt | Có sẵn | — |
+| `Inventory` | Tổng quan kho, việc cần làm của thủ kho | `/dashboard` | P1 |
 | `Inventory` | Hàng hóa, nhà cung cấp, kho | `/products`, `/suppliers`, `/warehouses` | P1 |
 | `Inventory` | Phiếu nhập | `/goods-receipts` | P1 |
+| `Inventory` | Lập, xem, in phiếu nhập | `/goods-receipts/[id]` | P1 |
 | `Inventory` | Phiếu xuất | `/goods-issues` | P1 |
+| `Inventory` | Lập, xem, in phiếu xuất | `/goods-issues/[id]` | P1 |
+| `Inventory` | Phiếu chờ duyệt | `/approvals` | P1 |
 | `Inventory` | Chuyển kho | `/transfers` | P2 |
+| `Inventory` | Lập, duyệt, nhận phiếu chuyển kho | `/transfers/[id]` | P2 |
 | `Inventory` | Tồn kho theo kho | `/stock` | P1 |
 | `Inventory` | Kiểm kê | `/stocktakes` | P1 |
+| `Inventory` | Đếm, duyệt, in phiếu kiểm kê | `/stocktakes/[id]` | P1 |
 | `Inventory` | Thẻ kho | `/stock/[productId]` | P1 |
 | `Inventory` | Cảnh báo tồn tối thiểu | `/stock` | P2 |
 | `Inventory` | Báo cáo xuất nhập tồn | `/reports` | P1 |

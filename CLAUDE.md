@@ -5,9 +5,10 @@ Trả lời bằng tiếng Việt.
 
 ## Tài liệu
 
-- **Riêng của dự án** nằm trong `docs/` của dự án này. Đọc `docs/01-TONG-QUAN-NGHIEP-VU.md` trước để biết demo cho ai, làm gì.
+- **Riêng của dự án** nằm trong `docs/` của dự án này. Trước khi làm một chức năng, đọc `docs/01-TONG-QUAN-NGHIEP-VU.md`, yêu cầu và quy tắc trong `docs/02-SRS.md`, đặc tả use case trong `docs/03-USE-CASE.md`; làm xong thì đối chiếu test case trong `docs/05-KICH-BAN-KIEM-THU.md`.
+- Code phải truy vết được về mã FR, BR, UC. Đổi nghiệp vụ thì cập nhật SRS và use case trước.
 - **Dùng chung cho mọi dự án** nằm trong `ZDOCS/` ở thư mục kho (cùng cấp với thư mục dự án):
-  - `ZDOCS/03-KIEN-TRUC/`: kiến trúc hệ thống, CSDL nền, quy ước API.
+  - `ZDOCS/03-KIEN-TRUC/`: kiến trúc hệ thống, CSDL nền, quy ước API, đặc tả nghiệp vụ phần nền (`USE-CASE-NEN.md`).
   - `ZDOCS/04-QUY-CHUAN-CODE/`: quy chuẩn code BE, FE.
 - Không chép tài liệu chung vào `docs/` của dự án. `docs/` chỉ chứa thứ riêng của dự án này.
 
@@ -16,7 +17,7 @@ Trả lời bằng tiếng Việt.
 - Trước khi viết/sửa code BE, **đọc `ZDOCS/04-QUY-CHUAN-CODE/BE-CAU-TRUC-THU-MUC.md`** và làm đúng theo đó (quy tắc vàng §2, checklist CRUD §3, code mẫu §4, migration §5).
 - Luồng: Controller → IService → IGenericRepository / IUnitOfWork → AppDbContext. Controller không inject DbContext/repository. API trả DTO, không trả Entity.
 - Entity đặt ở `Domain/Entities/{Area}/{Module}/`, bảng `{Area}_{TenSoNhieu}`.
-- Chức năng mới: đủ CRUD, mã quyền (BE `Permissions.cs` + `SystemSeeder` + FE `config/permissions.ts`), dữ liệu mẫu trong `DemoDataSeeder`, cập nhật `docs/02-THIET-KE-CSDL.md` và `docs/03-DANH-SACH-API.md`.
+- Chức năng mới: đủ CRUD, mã quyền (BE `Permissions.cs` + `SystemSeeder` + FE `config/permissions.ts`), dữ liệu mẫu trong `DemoDataSeeder`, cập nhật `docs/06-THIET-KE-CSDL.md` và `docs/07-DANH-SACH-API.md`.
 - Không commit secret; secret nằm trong `BE/src/API/.env`.
 
 ## Frontend (FE)

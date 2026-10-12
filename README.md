@@ -8,7 +8,7 @@
 | FE | `http://localhost:3108` |
 | BE (Swagger) | `https://localhost:7108/swagger` |
 | Database | `WebDemo_RetailQuanLyKho` |
-| Tài khoản demo | `admin` / `quanly` / `nhanvien`, mật khẩu theo `DEMO_PASSWORD` |
+| Tài khoản demo | Theo vai trò của dự án, xem bảng tài khoản trong [docs/04-KICH-BAN-DEMO.md](docs/04-KICH-BAN-DEMO.md); mật khẩu theo `DEMO_PASSWORD` |
 
 ---
 
@@ -42,15 +42,19 @@ Khi `DEMO_MODE=true`, BE tự tạo DB, chạy migration và nạp dữ liệu m
 | File | Nội dung |
 | :--- | :--- |
 | [docs/01-TONG-QUAN-NGHIEP-VU.md](docs/01-TONG-QUAN-NGHIEP-VU.md) | Khách hàng, vai trò, chức năng, phạm vi của demo này |
-| [docs/02-THIET-KE-CSDL.md](docs/02-THIET-KE-CSDL.md) | Bảng nghiệp vụ của dự án |
-| [docs/03-DANH-SACH-API.md](docs/03-DANH-SACH-API.md) | Mã quyền và API nghiệp vụ của dự án |
+| [docs/02-SRS.md](docs/02-SRS.md) | Đặc tả yêu cầu: chức năng, quy tắc nghiệp vụ, dữ liệu, báo cáo, phân quyền, màn hình |
+| [docs/03-USE-CASE.md](docs/03-USE-CASE.md) | Sơ đồ, danh sách và đặc tả use case |
 | [docs/04-KICH-BAN-DEMO.md](docs/04-KICH-BAN-DEMO.md) | Kịch bản trình bày cho khách |
+| [docs/05-KICH-BAN-KIEM-THU.md](docs/05-KICH-BAN-KIEM-THU.md) | Test case nghiệm thu |
+| [docs/06-THIET-KE-CSDL.md](docs/06-THIET-KE-CSDL.md) | Bảng nghiệp vụ của dự án |
+| [docs/07-DANH-SACH-API.md](docs/07-DANH-SACH-API.md) | Mã quyền và API nghiệp vụ của dự án |
 
 ## Tài liệu chung (thư mục `ZDOCS` của kho Web demo)
 
 | File | Nội dung |
 | :--- | :--- |
 | `ZDOCS/03-KIEN-TRUC/KIEN-TRUC-HE-THONG.md` | Kiến trúc tổng, công nghệ, phân quyền, chế độ dữ liệu mẫu, triển khai |
+| `ZDOCS/03-KIEN-TRUC/USE-CASE-NEN.md` | Đặc tả nghiệp vụ phần nền: đăng nhập, tài khoản, vai trò, cài đặt, đặt lại dữ liệu |
 | `ZDOCS/03-KIEN-TRUC/THIET-KE-CSDL-NEN.md` | Quy ước DB, nhóm bảng nền `System_*` |
 | `ZDOCS/03-KIEN-TRUC/QUY-UOC-API.md` | Quy ước API, API nền |
 | `ZDOCS/04-QUY-CHUAN-CODE/BE-CAU-TRUC-THU-MUC.md` | Thư mục và quy tắc code BE |
