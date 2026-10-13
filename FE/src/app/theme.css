@@ -1,0 +1,112 @@
+/*
+ * Design token màu (KIEN-TRUC-HE-THONG §6.5). Đổi thương hiệu: sửa file này.
+ * Không viết mã màu cứng trong className, mọi màu đi qua token để đổi một chỗ.
+ *
+ * Màu chính lấy từ biến --brand* do BrandThemeSync gán lúc chạy theo cài đặt
+ * Brand.PrimaryColor (xem src/lib/brand-color.ts). Giá trị dự phòng bên dưới là
+ * bộ màu tính sẵn cho #2563EB, để trang không bị chớp màu trước khi JS chạy.
+ *
+ * Màu nút hành động (--cta) là cam đậm #C2410C để chữ trắng đạt 5,2:1 (cam #EA580C chỉ đạt 3,6:1).
+ * Chế độ tối dùng cam sáng #F97316 với chữ tối.
+ */
+
+:root {
+  --radius: 0.625rem;
+
+  --background: #f8fafc;
+  --foreground: #1e293b;
+  --card: #ffffff;
+  --card-foreground: #1e293b;
+  --popover: #ffffff;
+  --popover-foreground: #1e293b;
+
+  --primary: var(--brand, #2563eb);
+  --primary-foreground: var(--brand-foreground, #ffffff);
+  --secondary: #f1f5f9;
+  --secondary-foreground: #1e293b;
+  --muted: #f1f5f9;
+  --muted-foreground: #475569;
+  --accent: #f1f5f9;
+  --accent-foreground: #0f172a;
+
+  /* Nút hành động nổi bật (đặt hàng, thanh toán, thanh công cụ demo) */
+  --cta: #c2410c;
+  --cta-foreground: #ffffff;
+
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --success: #15803d;
+  --success-foreground: #ffffff;
+  --warning: #b45309;
+  --warning-foreground: #ffffff;
+  --info: #0369a1;
+  --info-foreground: #ffffff;
+
+  --border: #e2e8f0;
+  --input: #cbd5e1;
+  --ring: var(--brand, #2563eb);
+
+  --chart-1: var(--brand, #2563eb);
+  --chart-2: #ea580c;
+  --chart-3: #0d9488;
+  --chart-4: #7c3aed;
+  --chart-5: #d97706;
+
+  --sidebar: #ffffff;
+  --sidebar-foreground: #334155;
+  --sidebar-primary: var(--brand, #2563eb);
+  --sidebar-primary-foreground: var(--brand-foreground, #ffffff);
+  --sidebar-accent: #f1f5f9;
+  --sidebar-accent-foreground: #0f172a;
+  --sidebar-border: #e2e8f0;
+  --sidebar-ring: var(--brand, #2563eb);
+}
+
+.dark {
+  --background: #0b1220;
+  --foreground: #e2e8f0;
+  --card: #111a2e;
+  --card-foreground: #e2e8f0;
+  --popover: #131d33;
+  --popover-foreground: #e2e8f0;
+
+  --primary: var(--brand-dark, #5182ef);
+  --primary-foreground: var(--brand-dark-foreground, #0f172a);
+  --secondary: #1b2740;
+  --secondary-foreground: #e2e8f0;
+  --muted: #1a2438;
+  --muted-foreground: #94a3b8;
+  --accent: #1e2a44;
+  --accent-foreground: #f1f5f9;
+
+  --cta: #f97316;
+  --cta-foreground: #1c1917;
+
+  --destructive: #f87171;
+  --destructive-foreground: #1c1917;
+  --success: #4ade80;
+  --success-foreground: #0b1220;
+  --warning: #fbbf24;
+  --warning-foreground: #0b1220;
+  --info: #38bdf8;
+  --info-foreground: #0b1220;
+
+  --border: #22304a;
+  --input: #2c3b58;
+  --ring: var(--brand-dark, #5182ef);
+
+  --chart-1: var(--brand-dark, #5182ef);
+  --chart-2: #fb923c;
+  --chart-3: #2dd4bf;
+  --chart-4: #a78bfa;
+  --chart-5: #fbbf24;
+
+  --sidebar: #0e1729;
+  --sidebar-foreground: #cbd5e1;
+  --sidebar-primary: var(--brand-dark, #5182ef);
+  --sidebar-primary-foreground: var(--brand-dark-foreground, #0f172a);
+  --sidebar-accent: #1a2540;
+  --sidebar-accent-foreground: #f1f5f9;
+  --sidebar-border: #1e2a42;
+  --sidebar-ring: var(--brand-dark, #5182ef);
+}

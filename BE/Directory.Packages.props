@@ -1,0 +1,41 @@
+<Project>
+  <!-- Quản lý phiên bản gói tập trung: đổi phiên bản ở đây, không ghi Version trong .csproj -->
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <!-- Cho phép ghim phiên bản gói gián tiếp (gói do gói khác kéo vào) ngay trong file này, vd để vá lỗ hổng -->
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+  </PropertyGroup>
+
+  <ItemGroup Label="EF Core">
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="8.0.11" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.11" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.11" />
+    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.11" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.11" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.11" />
+  </ItemGroup>
+
+  <ItemGroup Label="Web API, bảo mật">
+    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.11" />
+    <PackageVersion Include="Microsoft.IdentityModel.JsonWebTokens" Version="7.1.2" />
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageVersion Include="DotNetEnv" Version="3.1.1" />
+  </ItemGroup>
+
+  <ItemGroup Label="Application">
+    <PackageVersion Include="FluentValidation" Version="11.11.0" />
+    <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
+    <PackageVersion Include="Cronos" Version="0.13.0" />
+  </ItemGroup>
+
+  <ItemGroup Label="Ghim gói gián tiếp để vá lỗ hổng">
+    <!-- EF Core Sqlite 8.0.11 kéo SQLitePCLRaw 2.1.6, bản SQLite trong đó có lỗi CVE-2025-6965 (GHSA-2m69-gcr7-jv3q) -->
+    <PackageVersion Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.13" />
+  </ItemGroup>
+
+  <ItemGroup Label="Test">
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageVersion Include="xunit" Version="2.9.2" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="2.8.2" />
+  </ItemGroup>
+</Project>

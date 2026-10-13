@@ -1,0 +1,20 @@
+# Build context là FE/ (docker build FE hoặc build.context ../FE trong compose)
+
+# Sinh ra khi build hoặc cài
+node_modules
+.next
+out
+*.tsbuildinfo
+next-env.d.ts
+
+# Bí mật và biến môi trường máy dev: giá trị NEXT_PUBLIC_* lúc build lấy từ --build-arg, không lấy từ file
+.env
+.env.*
+
+# Không cần cho image
+.git
+.vscode
+.idea
+Dockerfile
+.dockerignore
+*.md

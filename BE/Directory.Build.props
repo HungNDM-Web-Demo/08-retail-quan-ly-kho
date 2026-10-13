@@ -1,0 +1,11 @@
+<Project>
+  <!-- Thiết lập chung cho mọi project trong BE -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Deterministic>true</Deterministic>
+    <!-- Kiểm tra lỗ hổng cả gói gián tiếp: có lỗ hổng là build báo cảnh báo NU190x -->
+    <NuGetAuditMode>all</NuGetAuditMode>
+  </PropertyGroup>
+</Project>

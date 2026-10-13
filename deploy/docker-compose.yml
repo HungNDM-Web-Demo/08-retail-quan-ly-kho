@@ -1,0 +1,74 @@
+# Chạy trọn bộ Quản lý Kho (Postgres + BE + FE) trên một máy: máy dev hoặc VPS tự quản.
+# Chạy trong thư mục deploy/:   docker compose --env-file .env up -d --build
+# Biến lấy từ deploy/.env (sao chép từ .env.example). Không kèm reverse proxy: HTTPS, tên miền do Dokploy/Caddy
+# bên ngoài lo; cổng BE, FE chỉ bind 127.0.0.1 nên không mở thẳng ra Internet.
+# Trên Dokploy không dùng file này: tạo Database Postgres và từng Application từ Dockerfile (xem README.md).
+
+name: retail-quan-ly-kho
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:?Thiếu POSTGRES_DB trong deploy/.env}
+      POSTGRES_USER: ${POSTGRES_USER:?Thiếu POSTGRES_USER trong deploy/.env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Thiếu POSTGRES_PASSWORD trong deploy/.env}
+      TZ: Asia/Ho_Chi_Minh
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # Chạy một lần khi khởi tạo DB: tạo extension unaccent (tìm không dấu)
+      - ./postgres-init:/docker-entrypoint-initdb.d:ro
+    # Không mở cổng ra ngoài; BE kết nối qua mạng nội bộ của compose (Host=postgres)
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  be:
+    build:
+      # Context là thư mục gốc dự án vì Infrastructure.csproj nhúng FE/src/mock/seed/*.json
+      context: ..
+      dockerfile: BE/Dockerfile
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DB_PROVIDER: Postgres
+      CONNECTION_STRING: Host=postgres;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
+      BEHIND_PROXY: ${BEHIND_PROXY:-true}
+      TZ: Asia/Ho_Chi_Minh
+    volumes:
+      - uploads:/app/wwwroot/uploads
+    ports:
+      - "127.0.0.1:7108:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  fe:
+    build:
+      context: ../FE
+      dockerfile: Dockerfile
+      # NEXT_PUBLIC_* nhúng lúc build: đổi giá trị trong .env thì phải `up -d --build` lại
+      args:
+        NEXT_PUBLIC_APP_NAME: ${NEXT_PUBLIC_APP_NAME:-Quản lý Kho}
+        NEXT_PUBLIC_DATA_SOURCE: ${NEXT_PUBLIC_DATA_SOURCE:-api}
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:?Thiếu NEXT_PUBLIC_API_URL trong deploy/.env}
+        NEXT_PUBLIC_DEMO_TOOLBAR: ${NEXT_PUBLIC_DEMO_TOOLBAR:-true}
+        NEXT_PUBLIC_DEMO_PASSWORD: ${NEXT_PUBLIC_DEMO_PASSWORD:-${DEMO_PASSWORD}}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-}
+    restart: unless-stopped
+    environment:
+      # Server Next gọi BE qua mạng nội bộ; trình duyệt vẫn gọi NEXT_PUBLIC_API_URL
+      API_INTERNAL_URL: http://be:8080
+      TZ: Asia/Ho_Chi_Minh
+    ports:
+      - "127.0.0.1:3108:3000"
+    depends_on:
+      - be
+
+volumes:
+  pgdata:
+  uploads:

@@ -1,0 +1,40 @@
+# Dùng khi build BE với context là thư mục gốc dự án: docker build -f BE/Dockerfile .
+# (FE build với context FE/ dùng FE/.dockerignore riêng.)
+
+# Git, IDE
+.git
+.gitattributes
+**/.vs
+**/.idea
+**/.vscode
+
+# Sinh ra khi build
+**/bin
+**/obj
+**/node_modules
+**/.next
+**/out
+**/*.tsbuildinfo
+**/next-env.d.ts
+
+# Dữ liệu lúc chạy, bí mật
+**/App_Data
+**/wwwroot/uploads
+**/.env
+**/.env.*
+!**/.env.example
+
+# Không cần cho image BE
+docs
+deploy
+FE/public
+FE/src/app
+FE/src/components
+FE/src/config
+FE/src/features
+FE/src/hooks
+FE/src/lib
+FE/src/stores
+FE/src/types
+FE/src/mock/*.ts
+*.md

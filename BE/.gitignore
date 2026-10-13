@@ -1,0 +1,2 @@
+# Bổ sung cho .gitignore gốc của dự án: file người dùng tải lên khi chạy thử
+src/API/wwwroot/uploads/
