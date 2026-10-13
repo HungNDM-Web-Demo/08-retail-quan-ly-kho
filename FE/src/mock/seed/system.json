@@ -1,0 +1,38 @@
+{
+  "$comment": "Dữ liệu nền dùng chung cho FE mock và BE SystemSeeder (nguồn duy nhất). Thuộc _template, không sửa trong dự án; phần riêng của dự án ghi ở project.json.",
+  "permissions": [
+    { "code": "dashboard.view", "groupName": "Tổng quan", "name": "Xem tổng quan", "sortOrder": 10 },
+    { "code": "users.view", "groupName": "Tài khoản", "name": "Xem tài khoản", "sortOrder": 110 },
+    { "code": "users.create", "groupName": "Tài khoản", "name": "Thêm tài khoản", "sortOrder": 111 },
+    { "code": "users.update", "groupName": "Tài khoản", "name": "Sửa, khóa, đặt lại mật khẩu", "sortOrder": 112 },
+    { "code": "users.delete", "groupName": "Tài khoản", "name": "Xóa tài khoản", "sortOrder": 113 },
+    { "code": "roles.view", "groupName": "Vai trò", "name": "Xem vai trò, ma trận quyền", "sortOrder": 120 },
+    { "code": "roles.create", "groupName": "Vai trò", "name": "Thêm vai trò", "sortOrder": 121 },
+    { "code": "roles.update", "groupName": "Vai trò", "name": "Sửa vai trò, phân quyền", "sortOrder": 122 },
+    { "code": "roles.delete", "groupName": "Vai trò", "name": "Xóa vai trò", "sortOrder": 123 },
+    { "code": "settings.view", "groupName": "Cài đặt", "name": "Xem cài đặt", "sortOrder": 130 },
+    { "code": "settings.update", "groupName": "Cài đặt", "name": "Sửa cài đặt, thương hiệu", "sortOrder": 131 },
+    { "code": "audit-logs.view", "groupName": "Nhật ký", "name": "Xem nhật ký thao tác", "sortOrder": 140 }
+  ],
+  "roles": [
+    { "code": "ADMIN", "name": "Quản trị viên", "description": "Toàn quyền, gồm quản lý tài khoản, vai trò, cài đặt", "isSystem": true, "permissions": ["*"] },
+    { "code": "MANAGER", "name": "Quản lý", "description": "Toàn bộ nghiệp vụ và báo cáo, không quản trị hệ thống", "isSystem": true, "permissions": ["dashboard.view"] },
+    { "code": "STAFF", "name": "Nhân viên", "description": "Thao tác hằng ngày", "isSystem": true, "permissions": ["dashboard.view"] }
+  ],
+  "users": [
+    { "username": "admin", "fullName": "Nguyễn Minh Quân", "email": "admin@example.com", "phone": "0123456781", "roles": ["ADMIN"], "isDemoAccount": true, "quickLogin": true, "sortOrder": 1, "description": "Toàn quyền: tài khoản, phân quyền, cài đặt" },
+    { "username": "quanly", "fullName": "Trần Thị Mai", "email": "quanly@example.com", "phone": "0123456782", "roles": ["MANAGER"], "isDemoAccount": true, "quickLogin": true, "sortOrder": 2, "description": "Nghiệp vụ và báo cáo" },
+    { "username": "nhanvien", "fullName": "Lê Hoàng Nam", "email": "nhanvien@example.com", "phone": "0123456783", "roles": ["STAFF"], "isDemoAccount": true, "quickLogin": true, "sortOrder": 3, "description": "Thao tác hằng ngày" }
+  ],
+  "settings": [
+    { "key": "Brand.AppName", "value": "Quản lý Kho", "groupName": "Thương hiệu" },
+    { "key": "Brand.LogoUrl", "value": "/logo/logo.svg", "groupName": "Thương hiệu" },
+    { "key": "Brand.PrimaryColor", "value": "#2563EB", "groupName": "Thương hiệu" },
+    { "key": "Company.Name", "value": "PUM", "groupName": "Doanh nghiệp" },
+    { "key": "Company.Hotline", "value": "0385 884 912", "groupName": "Doanh nghiệp" },
+    { "key": "Company.Zalo", "value": "0385884912", "groupName": "Doanh nghiệp" },
+    { "key": "Company.Email", "value": "manhhung02082003@gmail.com", "groupName": "Doanh nghiệp" },
+    { "key": "Company.Address", "value": "Ngũ Hành Sơn, Đà Nẵng", "groupName": "Doanh nghiệp" },
+    { "key": "Company.Website", "value": "", "groupName": "Doanh nghiệp" }
+  ]
+}
