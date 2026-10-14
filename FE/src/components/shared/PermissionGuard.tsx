@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { routePath } from '@/config/route-path'
 import { resolveHomePath } from '@/config/routes'
@@ -32,9 +32,15 @@ export function PermissionGuard({ permission, mode = 'any', redirect = false, fa
   const list = permission === undefined ? [] : Array.isArray(permission) ? permission : [permission]
   const allowed = !!user && (list.length === 0 || (mode === 'all' ? canAll(list) : canAny(list)))
 
+  // Chỉ chuyển trang một lần: AuthGuard xóa cờ roleSwitched ngay sau lần chuyển về trang chủ, nếu chạy lại
+  // effect sẽ đè bằng /forbidden trước khi điều hướng xong.
+  const redirected = useRef(false)
+
   useEffect(() => {
     // Vừa đổi vai trò nhanh thì về trang chủ thay vì báo thiếu quyền (UC-SYS-09)
-    if (!redirect || !user || allowed) return
+    if (allowed) redirected.current = false
+    if (!redirect || !user || allowed || redirected.current) return
+    redirected.current = true
     const home = resolveHomePath(can)
     const goHome = roleSwitched && pathname !== home
     router.replace(goHome ? home : routePath.forbidden)
