@@ -23,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: { default: name, template: `%s · ${name}` },
     description: appConfig.slogan,
     applicationName: name,
-    icons: { icon: appConfig.logoUrl },
+    icons: { icon: '/logo/logo-mark.svg' },
   }
 }
 

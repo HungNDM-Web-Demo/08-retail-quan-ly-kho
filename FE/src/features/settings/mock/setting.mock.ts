@@ -1,4 +1,5 @@
 import { permissions } from '@/config/permissions'
+import { validateProjectSettings } from '@/config/setting-labels'
 import { mockDelay } from '@/lib/data-source'
 import { auditUpdate } from '@/mock/mock-audit'
 import { requirePermission } from '@/mock/mock-auth'
@@ -41,6 +42,15 @@ export const settingMock = {
       throw validation(
         Object.fromEntries(unknown.map((item) => [item.key, 'Khóa cài đặt không tồn tại'])),
         `Khóa cài đặt không tồn tại: ${unknown.map((i) => i.key).join(', ')}`
+      )
+    }
+    // Quy tắc riêng của dự án (Billing.*, giờ mở cửa) giống BE
+    const invalid = validateProjectSettings(request.items, getSettingsMap())
+    const firstInvalid = Object.values(invalid)[0]
+    if (firstInvalid) {
+      throw validation(
+        Object.fromEntries(Object.entries(invalid).map(([index, message]) => [`items[${index}].value`, message])),
+        firstInvalid
       )
     }
     for (const item of request.items) {

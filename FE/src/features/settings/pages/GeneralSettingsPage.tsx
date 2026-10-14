@@ -15,6 +15,7 @@ import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Textarea } from '@/components/ui/textarea'
 import { permissions } from '@/config/permissions'
+import { settingExtraLabels } from '@/config/setting-labels'
 import { usePermissions } from '@/hooks/use-permissions'
 import { getErrorMessage } from '@/lib/api-error'
 import { BrandPreview } from '../components/BrandPreview'
@@ -218,7 +219,12 @@ export function GeneralSettingsPage() {
                   </CardHeader>
                   <CardContent className="grid gap-4 sm:grid-cols-2">
                     {indexes.map((index) => (
-                      <FormField key={extras[index].key} label={extras[index].key}>
+                      <FormField
+                        key={extras[index].key}
+                        label={settingExtraLabels[extras[index].key]?.label ?? extras[index].key}
+                        hint={settingExtraLabels[extras[index].key]?.hint}
+                        error={errors.extras?.[index]?.value?.message}
+                      >
                         <Input {...form.register(`extras.${index}.value`)} />
                       </FormField>
                     ))}

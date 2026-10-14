@@ -28,6 +28,9 @@ public static class DependencyInjection
         services.TryAddSingleton(TimeProvider.System);
         services.AddHttpContextAccessor();
 
+        // Bộ nhớ đệm trong tiến trình (vd token xác nhận ngắn hạn của dự án).
+        services.AddMemoryCache();
+
         AddOptions(services, configuration);
 
         // Persistence: một AppDbContext, một IUnitOfWork, repository generic.

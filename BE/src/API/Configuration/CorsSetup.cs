@@ -18,6 +18,7 @@ public static class CorsSetup
             .WithOrigins(origins)
             .AllowAnyHeader()
             .AllowAnyMethod()
+            .AllowCredentials() // SignalR client gửi negotiate kèm credentials
             .WithExposedHeaders("Location", "Content-Disposition")));
 
         return services;

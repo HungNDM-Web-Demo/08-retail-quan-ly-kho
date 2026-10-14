@@ -20,10 +20,11 @@ public sealed class ValidationBehavior(IServiceProvider services)
         if (validators.Count == 0)
             return;
 
-        var context = new ValidationContext<object>(request);
         var failures = new List<ValidationFailure>();
         foreach (var validator in validators)
         {
+            // Mỗi validator một context riêng: context gom lỗi tích lũy, dùng chung sẽ nhân đôi lỗi khi một kiểu có nhiều validator.
+            var context = new ValidationContext<object>(request);
             var result = await validator.ValidateAsync(context, ct);
             failures.AddRange(result.Errors);
         }

@@ -74,7 +74,7 @@ export function AppSidebar() {
                         isActive={active}
                         tooltip={item.title}
                         className={cn(
-                          'h-10 gap-3 px-3 text-[0.875rem] transition-colors duration-150 group-data-[collapsible=icon]:size-10! group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-0! [&_svg]:size-[1.125rem]',
+                          'h-10 gap-3 px-3 text-[0.875rem] transition-colors duration-150 group-data-[collapsible=icon]:size-10! group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-0! [&_svg]:size-[1.125rem] group-data-[collapsible=icon]:[&>span]:hidden',
                           'data-active:bg-primary/10 data-active:text-primary data-active:font-semibold'
                         )}
                       >
@@ -110,7 +110,7 @@ export function AppSidebar() {
                 size="lg"
                 tooltip={`${user.fullName} · Hồ sơ cá nhân`}
                 isActive={isActivePath(pathname, routePath.profile)}
-                className="gap-3 px-2 group-data-[collapsible=icon]:size-10! group-data-[collapsible=icon]:justify-center"
+                className="gap-3 px-2 group-data-[collapsible=icon]:size-10! group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:[&>span]:hidden"
               >
                 <Link href={routePath.profile} onClick={closeOnMobile}>
                   <UserAvatar name={user.fullName} avatarUrl={user.avatarUrl} size="sm" />

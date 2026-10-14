@@ -8,8 +8,16 @@ import { useUiStore } from '@/stores/ui.store'
 import { AppSidebar } from './AppSidebar'
 import { Header } from './Header'
 
+type AppShellProps = {
+  children: React.ReactNode
+  /** Nút thêm trên header của dự án (vd chuông thông báo), đặt trước nút sáng/tối */
+  headerActions?: React.ReactNode
+  /** Nội dung ngay trên header (vd thanh báo mất kết nối) */
+  banner?: React.ReactNode
+}
+
 /** Khung trang quản trị: sidebar + header + nội dung + thanh công cụ demo. */
-export function AppShell({ children }: { children: React.ReactNode }) {
+export function AppShell({ children, headerActions, banner }: AppShellProps) {
   const sidebarOpen = useUiStore((s) => s.sidebarOpen)
   const setSidebarOpen = useUiStore((s) => s.setSidebarOpen)
 
@@ -23,7 +31,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </a>
       <AppSidebar />
       <SidebarInset className="min-w-0">
-        <Header />
+        {banner}
+        <Header actions={headerActions} />
         <div
           id="noi-dung"
           className={cn(
