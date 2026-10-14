@@ -1,0 +1,9 @@
+{
+  "$comment": "Phần riêng của dự án, ghép thêm vào system.json khi seed (FE mock và BE SystemSeeder). permissions: quyền nghiệp vụ; roles: vai trò riêng (vd CASHIER); roleGrants: quyền cấp thêm cho vai trò có sẵn; users: tài khoản demo thêm, trùng username thì ghi đè các trường khai báo; roles trùng code thì ghi đè tên, mô tả; settings: ghi đè giá trị cài đặt nền theo khóa; homeAfterLogin: trang mở sau khi đăng nhập (chỉ FE).",
+  "permissions": [],
+  "roles": [],
+  "roleGrants": {},
+  "users": [],
+  "settings": [],
+  "homeAfterLogin": "/dashboard"
+}

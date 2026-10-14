@@ -2,9 +2,8 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { appConfig } from '@/config/app.config'
 import { routePath } from '@/config/route-path'
-import { getVisibleNavGroups } from '@/config/routes'
+import { getVisibleNavGroups, resolveHomePath } from '@/config/routes'
 import {
   Sidebar,
   SidebarContent,
@@ -47,7 +46,7 @@ export function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader className="h-16 justify-center border-b px-3 group-data-[collapsible=icon]:px-2">
         <Link
-          href={appConfig.homeAfterLogin}
+          href={resolveHomePath(can)}
           onClick={closeOnMobile}
           className="focus-visible:ring-sidebar-ring flex min-w-0 items-center rounded-md outline-none focus-visible:ring-2 group-data-[collapsible=icon]:justify-center"
           aria-label="Về trang chủ"

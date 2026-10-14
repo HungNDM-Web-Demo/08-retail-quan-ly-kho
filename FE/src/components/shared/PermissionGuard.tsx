@@ -2,8 +2,8 @@
 
 import { useEffect } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
-import { appConfig } from '@/config/app.config'
 import { routePath } from '@/config/route-path'
+import { resolveHomePath } from '@/config/routes'
 import { usePermissions } from '@/hooks/use-permissions'
 import { useAuthStore } from '@/stores/auth.store'
 
@@ -25,7 +25,7 @@ type PermissionGuardProps = {
  *   Một khối:  <PermissionGuard permission={permissions.users.create}><Button/></PermissionGuard>
  */
 export function PermissionGuard({ permission, mode = 'any', redirect = false, fallback = null, children }: PermissionGuardProps) {
-  const { user, canAny, canAll } = usePermissions()
+  const { user, can, canAny, canAll } = usePermissions()
   const router = useRouter()
   const pathname = usePathname()
   const roleSwitched = useAuthStore((s) => s.roleSwitched)
@@ -35,9 +35,10 @@ export function PermissionGuard({ permission, mode = 'any', redirect = false, fa
   useEffect(() => {
     // Vừa đổi vai trò nhanh thì về trang chủ thay vì báo thiếu quyền (UC-SYS-09)
     if (!redirect || !user || allowed) return
-    const goHome = roleSwitched && pathname !== appConfig.homeAfterLogin
-    router.replace(goHome ? appConfig.homeAfterLogin : routePath.forbidden)
-  }, [redirect, user, allowed, roleSwitched, pathname, router])
+    const home = resolveHomePath(can)
+    const goHome = roleSwitched && pathname !== home
+    router.replace(goHome ? home : routePath.forbidden)
+  }, [redirect, user, allowed, roleSwitched, pathname, router, can])
 
   if (!allowed) return redirect ? null : <>{fallback}</>
   return <>{children}</>

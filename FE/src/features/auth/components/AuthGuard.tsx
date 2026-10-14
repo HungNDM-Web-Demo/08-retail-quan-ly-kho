@@ -3,9 +3,8 @@
 import { useEffect } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { AppShellSkeleton } from '@/components/shared/AppShellSkeleton'
-import { appConfig } from '@/config/app.config'
 import { routePath } from '@/config/route-path'
-import { canAccessPath } from '@/config/routes'
+import { canAccessPath, resolveHomePath } from '@/config/routes'
 import { usePermissions } from '@/hooks/use-permissions'
 import { useAuthStore } from '@/stores/auth.store'
 import { useAuth, useSyncCurrentUser } from '../hooks/use-auth'
@@ -32,12 +31,14 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
     if (!isAuthenticated) {
       router.replace(`${routePath.login}?redirect=${encodeURIComponent(pathname)}`)
     } else if (!allowed) {
-      const goHome = roleSwitched && pathname !== appConfig.homeAfterLogin
-      router.replace(goHome ? appConfig.homeAfterLogin : routePath.forbidden)
+      // Trang chủ chọn theo quyền của vai trò mới (07-DANH-SACH-API §4: thu ngân → Bán hàng)
+      const home = resolveHomePath(can)
+      const goHome = roleSwitched && pathname !== home
+      router.replace(goHome ? home : routePath.forbidden)
     } else if (roleSwitched) {
       useAuthStore.getState().clearRoleSwitched()
     }
-  }, [hydrated, isAuthenticated, allowed, roleSwitched, pathname, router])
+  }, [hydrated, isAuthenticated, allowed, roleSwitched, pathname, router, can])
 
   if (!hydrated || !isAuthenticated || !allowed) return <AppShellSkeleton />
   return <>{children}</>

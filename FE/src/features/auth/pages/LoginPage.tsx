@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 import { BrandLogo } from '@/components/shared/BrandLogo'
 import { ThemeToggle } from '@/components/shared/ThemeToggle'
 import { appConfig } from '@/config/app.config'
+import { homePathForUser } from '@/config/routes'
 import { useBrand } from '@/features/settings/hooks/use-settings'
 import { formatPhone } from '@/lib/format'
 import { LoginForm } from '../components/LoginForm'
@@ -15,16 +16,24 @@ import { useAuth } from '../hooks/use-auth'
 import type { AuthResponse } from '../types/auth.types'
 
 /** Chỉ cho quay lại đường dẫn nội bộ (chặn chuyển hướng sang trang ngoài). */
-function safeRedirect(value: string | null): string {
+function safeRedirect(value: string | null): string | null {
   if (!value || !value.startsWith('/') || value.startsWith('//') || value.startsWith('/login')) {
-    return appConfig.homeAfterLogin
+    return null
   }
   return value
 }
 
 const HIGHLIGHTS = [
-  { icon: ShieldCheck, title: 'Phân quyền theo vai trò', text: 'Mỗi vai trò chỉ thấy đúng menu và thao tác của mình.' },
-  { icon: LayoutDashboard, title: 'Số liệu trực quan', text: 'Tổng quan, báo cáo cập nhật ngay khi có thao tác mới.' },
+  {
+    icon: ShieldCheck,
+    title: 'Phân quyền theo vai trò',
+    text: 'Mỗi vai trò chỉ thấy đúng menu và thao tác của mình.',
+  },
+  {
+    icon: LayoutDashboard,
+    title: 'Số liệu trực quan',
+    text: 'Tổng quan, báo cáo cập nhật ngay khi có thao tác mới.',
+  },
   { icon: Smartphone, title: 'Dùng mọi thiết bị', text: 'Máy tính, máy tính bảng và điện thoại.' },
 ]
 
@@ -32,19 +41,20 @@ const HIGHLIGHTS = [
 export function LoginPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const { hydrated, isAuthenticated } = useAuth()
+  const { hydrated, isAuthenticated, user } = useAuth()
   const brand = useBrand()
   const redirectTo = safeRedirect(searchParams.get('redirect'))
   const expired = searchParams.get('expired') === '1'
 
   // UC-SYS-01 luồng 1a: đã có phiên còn hạn thì vào thẳng
+  // Không có trang quay lại thì về trang chủ theo quyền (thu ngân vào thẳng Bán hàng, TC-27)
   useEffect(() => {
-    if (hydrated && isAuthenticated) router.replace(redirectTo)
-  }, [hydrated, isAuthenticated, redirectTo, router])
+    if (hydrated && isAuthenticated) router.replace(redirectTo ?? homePathForUser(user))
+  }, [hydrated, isAuthenticated, redirectTo, user, router])
 
   const handleSuccess = (response: AuthResponse) => {
     toast.success(`Xin chào, ${response.user.fullName}!`)
-    router.replace(redirectTo)
+    router.replace(redirectTo ?? homePathForUser(response.user))
   }
 
   const { company } = brand
@@ -64,8 +74,9 @@ export function LoginPage() {
             <div className="space-y-2">
               <h1 className="text-3xl font-semibold tracking-tight">Đăng nhập</h1>
               <p className="text-muted-foreground text-pretty">
-                Chào mừng bạn đến với <span className="text-foreground font-medium">{brand.appName}</span>. Nhập tài
-                khoản để tiếp tục.
+                Chào mừng bạn đến với{' '}
+                <span className="text-foreground font-medium">{brand.appName}</span>. Nhập tài khoản
+                để tiếp tục.
               </p>
             </div>
 
@@ -89,7 +100,10 @@ export function LoginPage() {
             © {year} {company.name || brand.appName}
           </span>
           {company.hotline && (
-            <a href={`tel:${company.hotline.replace(/\s/g, '')}`} className="hover:text-foreground inline-flex items-center gap-1.5">
+            <a
+              href={`tel:${company.hotline.replace(/\s/g, '')}`}
+              className="hover:text-foreground inline-flex items-center gap-1.5"
+            >
               <Phone className="size-3.5" aria-hidden="true" />
               Hỗ trợ: {formatPhone(company.hotline)}
             </a>
@@ -117,11 +131,15 @@ export function LoginPage() {
           aria-hidden="true"
         />
 
-        <p className="relative text-sm font-medium tracking-wide uppercase">{company.name || brand.appName}</p>
+        <p className="relative text-sm font-medium tracking-wide uppercase">
+          {company.name || brand.appName}
+        </p>
 
         <div className="relative max-w-lg space-y-8">
           <div className="space-y-4">
-            <h2 className="text-4xl leading-tight font-semibold tracking-tight text-balance xl:text-5xl">{brand.appName}</h2>
+            <h2 className="text-4xl leading-tight font-semibold tracking-tight text-balance xl:text-5xl">
+              {brand.appName}
+            </h2>
             <p className="text-lg text-pretty">{appConfig.slogan}</p>
           </div>
           <ul className="space-y-5">

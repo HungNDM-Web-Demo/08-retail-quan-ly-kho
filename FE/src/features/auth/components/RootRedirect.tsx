@@ -3,19 +3,19 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Loader2 } from 'lucide-react'
-import { appConfig } from '@/config/app.config'
 import { routePath } from '@/config/route-path'
+import { homePathForUser } from '@/config/routes'
 import { useAuth } from '../hooks/use-auth'
 
-/** Trang "/": đã đăng nhập thì sang trang chủ (homeAfterLogin), chưa thì về /login. */
+/** Trang "/": đã đăng nhập thì sang trang chủ theo quyền (homePathForUser), chưa thì về /login. */
 export function RootRedirect() {
-  const { hydrated, isAuthenticated } = useAuth()
+  const { hydrated, isAuthenticated, user } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
     if (!hydrated) return
-    router.replace(isAuthenticated ? appConfig.homeAfterLogin : routePath.login)
-  }, [hydrated, isAuthenticated, router])
+    router.replace(isAuthenticated ? homePathForUser(user) : routePath.login)
+  }, [hydrated, isAuthenticated, user, router])
 
   return (
     <div className="flex min-h-svh items-center justify-center" aria-busy="true">

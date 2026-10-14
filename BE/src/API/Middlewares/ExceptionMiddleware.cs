@@ -13,7 +13,7 @@ namespace API.Middlewares;
 /// <item><term>UnauthorizedAccessException</term><description>401.</description></item>
 /// <item><term>ForbiddenException</term><description>403.</description></item>
 /// <item><term>NotFoundException</term><description>404.</description></item>
-/// <item><term>ConflictException</term><description>409, kèm <c>errors</c> khi gắn với một trường.</description></item>
+/// <item><term>ConflictException</term><description>409, kèm <c>errors</c> khi gắn với một trường và các trường mở rộng (vd <c>serverTotal</c>).</description></item>
 /// <item><term>Khác</term><description>500, ghi log, không lộ chi tiết lỗi (trừ môi trường Development).</description></item>
 /// </list>
 /// </summary>
@@ -71,15 +71,19 @@ public sealed class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionM
                 return problem;
             }
 
-            case ConflictException { Field: { } field } conflict:
-                return ApiProblemDetails.CreateValidation(
-                    context,
-                    new Dictionary<string, string[]> { [ApiProblemDetails.ToFieldName(field)] = [conflict.Message] },
-                    StatusCodes.Status409Conflict,
-                    conflict.Message);
-
             case ConflictException conflict:
-                return ApiProblemDetails.Create(context, StatusCodes.Status409Conflict, conflict.Message);
+            {
+                var problem = conflict.Field is { } field
+                    ? ApiProblemDetails.CreateValidation(
+                        context,
+                        new Dictionary<string, string[]> { [ApiProblemDetails.ToFieldName(field)] = [conflict.Message] },
+                        StatusCodes.Status409Conflict,
+                        conflict.Message)
+                    : ApiProblemDetails.Create(context, StatusCodes.Status409Conflict, conflict.Message);
+                foreach (var (key, value) in conflict.Extensions)
+                    problem.Extensions[key] = value;
+                return problem;
+            }
 
             case UnauthorizedAccessException unauthorized:
                 return ApiProblemDetails.Create(context, StatusCodes.Status401Unauthorized, unauthorized.Message);
