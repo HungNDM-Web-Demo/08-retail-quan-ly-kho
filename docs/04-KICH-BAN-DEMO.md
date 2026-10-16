@@ -10,12 +10,12 @@
 - [ ] Đặt lại dữ liệu demo (thanh công cụ demo → Đặt lại dữ liệu) để có số liệu 90 ngày tính tới hôm nay, có sẵn phiếu chờ duyệt và hàng dưới tối thiểu
 - [ ] Đổi tên doanh nghiệp, logo, màu theo thương hiệu khách (Cài đặt → Thương hiệu) nếu đã biết
 - [ ] Mở thêm một tab ở kích thước tablet (800×1280) để chiếu màn đếm kiểm kê của thủ kho
-- [ ] In sẵn hoặc mở trên điện thoại tờ mã vạch mẫu: mã thùng Sting, thùng dầu Neptune, thùng nước mắm Nam Ngư (giá trị ở `05-KICH-BAN-KIEM-THU.md` §1)
+- [ ] In sẵn hoặc mở trên điện thoại tờ mã vạch mẫu: mã thùng nước tăng lực `NTL-330`, thùng dầu ăn `DAU-1L`, thùng nước mắm `NMAM-750` (giá trị ở `05-KICH-BAN-KIEM-THU.md` §1)
 - [ ] Ghi nhớ 3 kho mẫu: `KTONG` Kho tổng Bình Tân, `KTD` Kho Thủ Đức, `KBH` Kho Biên Hòa
 
 | Link | Ghi chú |
 | :--- | :--- |
-| FE | `http://localhost:3108` hoặc link online |
+| FE | `http://localhost:3108`, hoặc bản trực tuyến chỉ có FE, dữ liệu mẫu trong trình duyệt: `https://pum-quan-ly-kho.vercel.app` (đổi vai trò bằng thanh công cụ demo) |
 | Swagger | `https://localhost:7108/swagger` (khi khách hỏi về tích hợp kế toán, bán hàng) |
 
 | Tài khoản | Vai trò | Dùng để cho xem |
@@ -35,16 +35,16 @@ Mật khẩu: giá trị `DEMO_PASSWORD` trong `.env`, hoặc bấm "Đăng nh�
 | # | Vai trò | Thao tác | Điểm cần nhấn mạnh |
 | :---: | :--- | :--- | :--- |
 | 1 | Quản lý kho | Đăng nhập, mở Tổng quan | Thấy ngay giá trị tồn từng kho, bao nhiêu phiếu đang chờ mình duyệt, hàng nào đang trên xe, kho nào sắp thiếu hàng |
-| 2 | Thủ kho | Đổi sang Thủ kho; lập phiếu nhập `KTONG` từ nhà cung cấp Minh Phát: quét mã thùng Sting, nhập 100 thùng giá 180.000 ₫; quét thùng dầu Neptune, 50 thùng giá 600.000 ₫; nhập chi phí xe 1.200.000 ₫; gửi duyệt | Quét mã thùng là ra đúng hàng, đúng đơn vị; chi phí xe tự chia vào từng mặt hàng; gửi duyệt rồi tồn mới tăng, không ai tự ý cộng kho |
-| 3 | Quản lý kho | Đổi sang Quản lý, mở Phiếu chờ duyệt, xem phiếu: chi phí xe chia 450.000 ₫ cho Sting, 750.000 ₫ cho dầu; bấm Duyệt; in phiếu nhập kho mẫu 01-VT | Giá vốn bình quân tự tính lại theo từng kho, đã gồm chi phí xe; phiếu in đúng mẫu kế toán quen dùng |
-| 4 | Thủ kho | Lập phiếu xuất bán 30 thùng OMO cho Đại lý Tạp hóa Thanh Hương, gửi duyệt; lập tiếp phiếu 25 thùng cho đại lý khác thì bị chặn: chỉ còn 80 túi khả dụng | Hàng đã nằm trên phiếu chờ duyệt thì được giữ chỗ, không bán trùng một thùng hàng cho hai khách |
+| 2 | Thủ kho | Đổi sang Thủ kho; lập phiếu nhập `KTONG` từ nhà cung cấp Minh Phát: quét mã thùng nước tăng lực, nhập 100 thùng giá 180.000 ₫; quét thùng dầu ăn 1 lít, 50 thùng giá 600.000 ₫; nhập chi phí xe 1.200.000 ₫; gửi duyệt | Quét mã thùng là ra đúng hàng, đúng đơn vị; chi phí xe tự chia vào từng mặt hàng; gửi duyệt rồi tồn mới tăng, không ai tự ý cộng kho |
+| 3 | Quản lý kho | Đổi sang Quản lý, mở Phiếu chờ duyệt, xem phiếu: chi phí xe chia 450.000 ₫ cho nước tăng lực, 750.000 ₫ cho dầu ăn; bấm Duyệt; in phiếu nhập kho mẫu 01-VT | Giá vốn bình quân tự tính lại theo từng kho, đã gồm chi phí xe; phiếu in đúng mẫu kế toán quen dùng |
+| 4 | Thủ kho | Lập phiếu xuất bán 30 thùng nước giặt 3,7 kg cho Đại lý Tạp hóa Thanh Hương, gửi duyệt; lập tiếp phiếu 25 thùng cho đại lý khác thì bị chặn: chỉ còn 80 túi khả dụng | Hàng đã nằm trên phiếu chờ duyệt thì được giữ chỗ, không bán trùng một thùng hàng cho hai khách |
 | 5 | Quản lý kho | Từ chối phiếu 30 thùng với lý do "Đại lý chỉ đặt 20 thùng"; đổi sang Thủ kho sửa thành 20 thùng, gửi lại; đổi lại Quản lý duyệt | Mọi lần từ chối đều có lý do; người lập không tự duyệt phiếu của mình |
-| 6 | Thủ kho | Mở Tồn kho → Cảnh báo: Kho Thủ Đức chỉ còn 90 chai Sting, dưới mức 120; hệ thống đề xuất 26 thùng; bấm "Tạo phiếu chuyển" từ Kho tổng, gửi duyệt | Không cần nhớ kho nào thiếu gì; một bấm là có phiếu chuyển đúng số lượng, nguyên thùng |
+| 6 | Thủ kho | Mở Tồn kho → Cảnh báo: Kho Thủ Đức chỉ còn 90 chai nước tăng lực, dưới mức 120; hệ thống đề xuất 26 thùng; bấm "Tạo phiếu chuyển" từ Kho tổng, gửi duyệt | Không cần nhớ kho nào thiếu gì; một bấm là có phiếu chuyển đúng số lượng, nguyên thùng |
 | 7 | Quản lý kho | Duyệt phiếu chuyển; Tổng quan hiện 1 phiếu "Đang chuyển" và giá trị hàng trên xe | Biết hàng đang nằm trên xe bao nhiêu tiền; xe đi quá 3 ngày chưa nhận thì gắn nhãn Trễ |
 | 8 | Thủ kho | Ở kho Thủ Đức, xác nhận nhận hàng: thực nhận 622 chai, 2 chai bể | Hao hụt trên đường tự ghi nhận đúng giá trị, không lẫn vào lệch kho |
 | 9 | Thủ kho | Chuyển sang tab tablet; tạo phiếu kiểm kê Kho Thủ Đức, nhóm Dầu ăn, gia vị; đếm: quét mã thùng, gõ số chai lẻ; màn đếm không hiện số trên sổ; gửi duyệt | Kiểm kê mù, người đếm không "đếm theo sổ"; chỉ khóa nhóm hàng đang đếm, phần còn lại của kho vẫn xuất nhập bình thường |
 | 10 | Quản lý kho | Mở phiếu kiểm kê: thiếu 3 chai dầu (−156.000 ₫), thừa 30 chai nước mắm (+990.000 ₫) kèm nguyên nhân; duyệt; in biên bản kiểm kê mẫu 05-VT | Chênh lệch lớn bắt buộc có nguyên nhân; duyệt xong tồn tự khớp thực tế, có biên bản ký |
-| 11 | Quản lý kho | Mở Thẻ kho Sting tại Kho tổng: tồn đầu ngày, phiếu nhập sáng nay, phiếu chuyển chiều nay, tồn cuối; bấm số phiếu để mở phiếu | Hỏi "thùng hàng đi đâu" là có câu trả lời ngay, từng phiếu, từng người duyệt |
+| 11 | Quản lý kho | Mở Thẻ kho nước tăng lực `NTL-330` tại Kho tổng: tồn đầu ngày, phiếu nhập sáng nay, phiếu chuyển chiều nay, tồn cuối; bấm số phiếu để mở phiếu | Hỏi "thùng hàng đi đâu" là có câu trả lời ngay, từng phiếu, từng người duyệt |
 | 12 | Quản lý kho | Mở Báo cáo xuất nhập tồn tháng này theo kho, bấm vào số xuất để xem chi tiết; chuyển sang tab Chậm luân chuyển | Có ngay số liệu gửi kế toán cuối tháng; biết hàng nào nằm kho quá 60, 90 ngày đang chôn vốn |
 
 > Nếu khách hỏi phân quyền: đổi sang Quản trị viên, bỏ gán Kho Thủ Đức của thủ kho, đổi sang Thủ kho để thấy kho đó biến mất khỏi mọi màn hình.

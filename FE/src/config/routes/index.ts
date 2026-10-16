@@ -1,6 +1,9 @@
 import type { LucideIcon } from 'lucide-react'
 import { appConfig } from '@/config/app.config'
+import { catalogRoutes } from './catalog.routes'
+import { documentsRoutes } from './documents.routes'
 import { mainRoutes } from './main.routes'
+import { stockRoutes } from './stock.routes'
 import { settingsRoutes } from './settings.routes'
 import { hiddenRoutes } from './hidden.routes'
 
@@ -34,7 +37,13 @@ export type NavGroup = {
   items: NavItem[]
 }
 
-export const navGroups: NavGroup[] = [mainRoutes, settingsRoutes]
+export const navGroups: NavGroup[] = [
+  mainRoutes,
+  documentsRoutes,
+  stockRoutes,
+  catalogRoutes,
+  settingsRoutes,
+]
 
 export type CanFn = (permission: string) => boolean
 

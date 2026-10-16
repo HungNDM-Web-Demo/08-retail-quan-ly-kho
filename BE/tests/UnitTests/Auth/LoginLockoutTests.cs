@@ -48,7 +48,7 @@ public sealed class LoginLockoutTests : IAsyncLifetime
         var response = await LoginAsync("nhanvien", DemoPassword);
         Assert.Equal("nhanvien", response.User.Username);
         Assert.Equal(["STAFF"], response.User.Roles);
-        Assert.Equal(["Nhân viên"], response.User.RoleNames);
+        Assert.Equal(["Thủ kho"], response.User.RoleNames);
     }
 
     [Fact]

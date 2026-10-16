@@ -27,7 +27,7 @@ Tài liệu mô tả đầy đủ yêu cầu của bản demo Quản lý Kho: da
 | :--- | :--- |
 | Kho | Địa điểm chứa hàng, có mã riêng, vd `KTONG` Kho tổng Bình Tân |
 | Thủ kho | Người trực tiếp nhận, giao, đếm hàng tại kho được gán |
-| Mặt hàng | Hàng hóa quản lý trong kho, có mã hàng, vd `STING-330` |
+| Mặt hàng | Hàng hóa quản lý trong kho, có mã hàng, vd `NTL-330` |
 | Đơn vị cơ bản | Đơn vị nhỏ nhất dùng để tính tồn và giá vốn, vd Chai |
 | Đơn vị quy đổi | Đơn vị lớn hơn của mặt hàng, vd Thùng 24, có hệ số và mã vạch riêng |
 | Số lượng quy đổi | Số lượng tính về đơn vị cơ bản = số lượng × hệ số |
@@ -198,7 +198,7 @@ flowchart TD
 
 | Mã | Quy tắc | Áp dụng cho |
 | :--- | :--- | :--- |
-| BR-01 | Tồn và giá vốn lưu theo đơn vị cơ bản. Đơn vị quy đổi có hệ số nguyên từ 2 đến 10.000. Số lượng quy đổi = số lượng × hệ số. Cách đọc tồn: chia cho đơn vị có hệ số lớn nhất tới nhỏ nhất, bỏ phần bằng 0; Sting có Thùng 24: 568 chai đọc là "23 thùng 16 chai" | FR-07, FR-24 |
+| BR-01 | Tồn và giá vốn lưu theo đơn vị cơ bản. Đơn vị quy đổi có hệ số nguyên từ 2 đến 10.000. Số lượng quy đổi = số lượng × hệ số. Cách đọc tồn: chia cho đơn vị có hệ số lớn nhất tới nhỏ nhất, bỏ phần bằng 0; nước tăng lực `NTL-330` có Thùng 24: 568 chai đọc là "23 thùng 16 chai" | FR-07, FR-24 |
 | BR-02 | Mã hàng 3–20 ký tự gồm chữ in hoa, số, dấu `-`, không trùng. Mã kho 2–10 ký tự chữ in hoa và số, không trùng. Mã vạch chỉ gồm chữ số, dài 8–14 ký tự (mã thùng thường là GTIN-14), không trùng giữa mọi đơn vị của mọi mặt hàng. Mã chứng từ theo §5.3, số thứ tự đếm lại từ 1 mỗi ngày | FR-04, FR-07, FR-11 |
 | BR-03 | Tồn khả dụng của một mặt hàng tại một kho = tồn thực − tổng số lượng quy đổi của mặt hàng đó trên các phiếu xuất và phiếu chuyển (kho đi là kho này) đang ở trạng thái Chờ duyệt | FR-14, FR-21, FR-24 |
 | BR-04 | Khi gửi duyệt phiếu xuất hoặc phiếu chuyển: với mỗi mặt hàng, tổng số lượng quy đổi các dòng không vượt tồn khả dụng (không tính chính phiếu đó). Khi duyệt: kiểm tra lại không vượt tồn thực. Không phiếu nào được làm tồn nhỏ hơn 0 | FR-15, FR-21 |
@@ -212,7 +212,7 @@ flowchart TD
 | BR-12 | Phiếu đã duyệt không sửa, không hủy. Phiếu ngược của phiếu nhập là phiếu xuất loại "Xuất điều chỉnh" cùng kho, cùng số lượng, giá trị theo BR-10; phiếu ngược của phiếu xuất là phiếu nhập loại "Nhập điều chỉnh" với đơn giá bằng giá vốn đã ghi trên phiếu xuất gốc. Phiếu ngược ghi mã phiếu gốc, vẫn qua duyệt; mỗi phiếu gốc chỉ có một phiếu ngược | FR-19 |
 | BR-13 | Chuyển kho: kho đi khác kho đến, cả hai đang hoạt động. Khi duyệt: trừ tồn kho đi; giá vốn chuyển của dòng = giá vốn bình quân kho đi lúc duyệt; giá trị chuyển = số lượng × giá vốn chuyển. Khi nhận: số lượng thực nhận không vượt số lượng chuyển; kho đến cộng số thực nhận với giá trị = số thực nhận × giá vốn chuyển, giá vốn kho đến tính lại theo BR-09; phần thiếu ghi hao hụt vận chuyển với giá trị = số lượng thiếu × giá vốn chuyển. Phiếu "Đang chuyển" quá 3 ngày chưa nhận được gắn nhãn "Trễ" | FR-22, FR-23 |
 | BR-14 | Mỗi kho có tối đa một phiếu kiểm kê chưa kết thúc (Đang kiểm hoặc Chờ duyệt). Tồn sổ sách được chốt lúc tạo phiếu. Phiếu liệt kê các mặt hàng thuộc phạm vi đang có tồn khác 0 tại kho; người đếm được thêm mặt hàng thuộc phạm vi tìm thấy ngoài danh sách, với tồn sổ sách 0. Khi phiếu chưa kết thúc, không duyệt được phiếu nhập, xuất, chuyển đi và không xác nhận nhận được phiếu chuyển đến có mặt hàng thuộc phạm vi tại kho đó; lập và gửi duyệt vẫn được | FR-27, FR-15 |
-| BR-15 | Kiểm kê mù: màn đếm của thủ kho không hiển thị tồn sổ sách và chênh lệch. Mỗi lần quét cộng 1 đơn vị của mã vừa quét (quét mã thùng Sting cộng 24 chai); nhập tay được theo đơn vị cơ bản hoặc đơn vị quy đổi | FR-28 |
+| BR-15 | Kiểm kê mù: màn đếm của thủ kho không hiển thị tồn sổ sách và chênh lệch. Mỗi lần quét cộng 1 đơn vị của mã vừa quét (quét mã thùng `NTL-330` cộng 24 chai); nhập tay được theo đơn vị cơ bản hoặc đơn vị quy đổi | FR-28 |
 | BR-16 | Chênh lệch dòng = số thực đếm − tồn sổ sách; giá trị chênh = chênh lệch × giá vốn bình quân lúc chốt. Dòng có trị tuyệt đối giá trị chênh từ 1.000.000 ₫, hoặc trị tuyệt đối chênh lệch từ 5% tồn sổ sách, hoặc tồn sổ sách bằng 0 mà đếm được hàng, bắt buộc chọn nguyên nhân: Hư hỏng, Mất mát, Nhập xuất chưa lập phiếu, Nhầm mã hàng, Khác (kèm ghi chú). Không gửi duyệt được khi còn dòng chưa đếm; nút "Điền bằng sổ sách cho dòng chưa đếm" để người đếm chủ động xác nhận | FR-29 |
 | BR-17 | Duyệt kiểm kê: tồn mới = số thực đếm; giá vốn bình quân giữ nguyên; thẻ kho ghi một dòng "Điều chỉnh kiểm kê" cho mỗi mặt hàng có chênh lệch (thừa ghi vào cột nhập, thiếu ghi vào cột xuất); mở khóa phát sinh. "Trả lại đếm lại" đưa phiếu về Đang kiểm, giữ số đã đếm của dòng không bị trả lại. Hủy phiếu chưa kết thúc: không điều chỉnh, mở khóa | FR-30, FR-31 |
 | BR-18 | Trạng thái tồn tại một kho: Hết hàng (tồn thực = 0); Dưới tối thiểu (tồn khả dụng ≤ tồn tối thiểu); Vượt tối đa (tồn thực > tồn tối đa); còn lại là Bình thường. Tồn tối thiểu phải nhỏ hơn tồn tối đa; để trống thì không cảnh báo | FR-01, FR-26 |
@@ -320,7 +320,7 @@ stateDiagram-v2
 | Phiếu kiểm kê | `KK` + `yyMMdd` + 2 số | `KK26101201` |
 | Kho | 2–10 ký tự chữ in hoa, số | `KTONG` |
 | Nhà cung cấp | `NCC` + 3 số | `NCC001` |
-| Mặt hàng | 3–20 ký tự chữ in hoa, số, `-` | `STING-330` |
+| Mặt hàng | 3–20 ký tự chữ in hoa, số, `-` | `NTL-330` |
 
 ---
 

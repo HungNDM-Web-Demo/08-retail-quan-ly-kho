@@ -13,8 +13,8 @@
 | Ngành / loại khách hàng | Doanh nghiệp thương mại, phân phối có 1–3 kho |
 | Loại sản phẩm | Web quản lý |
 | Ý tưởng gốc | 2.4 · Quản lý kho: xuất nhập tồn (`ZDOCS/02-KE-HOACH/DANH-SACH-Y-TUONG.md`) |
-| Người phụ trách | |
-| Trạng thái | Có tài liệu nghiệp vụ (SRS, use case, kịch bản demo, kịch bản kiểm thử), chưa code |
+| Người phụ trách | Mạnh Hùng (Pum) |
+| Trạng thái | Đã code BE + FE, chạy được cả hai chế độ (dữ liệu mẫu và BE thật trên Postgres) |
 
 ## 2. Vấn đề của khách hàng
 

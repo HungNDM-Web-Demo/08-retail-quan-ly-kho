@@ -1,9 +1,359 @@
 {
-  "$comment": "Phần riêng của dự án, ghép thêm vào system.json khi seed (FE mock và BE SystemSeeder). permissions: quyền nghiệp vụ; roles: vai trò riêng (vd CASHIER); roleGrants: quyền cấp thêm cho vai trò có sẵn; users: tài khoản demo thêm, trùng username thì ghi đè các trường khai báo; roles trùng code thì ghi đè tên, mô tả; settings: ghi đè giá trị cài đặt nền theo khóa; homeAfterLogin: trang mở sau khi đăng nhập (chỉ FE).",
-  "permissions": [],
-  "roles": [],
-  "roleGrants": {},
-  "users": [],
-  "settings": [],
+  "$comment": "Phần riêng của dự án, ghép thêm vào system.json khi seed (FE mock và BE SystemSeeder). permissions: quyền nghiệp vụ (docs/07-DANH-SACH-API.md §1, khớp 02-SRS §7); roles: đổi tên, mô tả MANAGER (Quản lý kho), STAFF (Thủ kho); roleGrants: quyền cấp thêm cho vai trò có sẵn; users: admin, quanly, nhanvien ghi đè mô tả thẻ Đăng nhập nhanh, thêm thukho.bh (thủ kho Kho Biên Hòa, không có thẻ đăng nhập nhanh); kho được gán cho thủ kho nằm ở demo-data.json (warehouses[].keepers); settings: Brand.*, Store.* (đơn vị in trên phiếu nhập, xuất, chuyển, biên bản kiểm kê; docs/06 §3); homeAfterLogin: trang mặc định, FE chọn lại theo quyền (docs/07 §4.1).",
+  "permissions": [
+    {
+      "code": "products.view",
+      "groupName": "Hàng hóa",
+      "name": "Xem hàng hóa, nhóm hàng",
+      "sortOrder": 200
+    },
+    {
+      "code": "products.create",
+      "groupName": "Hàng hóa",
+      "name": "Thêm nhóm hàng, mặt hàng",
+      "sortOrder": 201
+    },
+    {
+      "code": "products.update",
+      "groupName": "Hàng hóa",
+      "name": "Sửa, ngừng mặt hàng; đặt tồn tối thiểu, tối đa",
+      "sortOrder": 202
+    },
+    {
+      "code": "products.delete",
+      "groupName": "Hàng hóa",
+      "name": "Xóa mặt hàng, nhóm hàng chưa có chứng từ",
+      "sortOrder": 203
+    },
+    { "code": "warehouses.view", "groupName": "Kho", "name": "Xem kho", "sortOrder": 210 },
+    { "code": "warehouses.create", "groupName": "Kho", "name": "Thêm kho", "sortOrder": 211 },
+    {
+      "code": "warehouses.update",
+      "groupName": "Kho",
+      "name": "Sửa, ngừng hoạt động kho",
+      "sortOrder": 212
+    },
+    {
+      "code": "warehouses.delete",
+      "groupName": "Kho",
+      "name": "Xóa kho chưa có chứng từ",
+      "sortOrder": 213
+    },
+    {
+      "code": "warehouses.assign",
+      "groupName": "Kho",
+      "name": "Gán kho cho thủ kho",
+      "sortOrder": 214
+    },
+    {
+      "code": "suppliers.view",
+      "groupName": "Nhà cung cấp",
+      "name": "Xem nhà cung cấp",
+      "sortOrder": 220
+    },
+    {
+      "code": "suppliers.create",
+      "groupName": "Nhà cung cấp",
+      "name": "Thêm nhà cung cấp",
+      "sortOrder": 221
+    },
+    {
+      "code": "suppliers.update",
+      "groupName": "Nhà cung cấp",
+      "name": "Sửa, ngừng giao dịch nhà cung cấp",
+      "sortOrder": 222
+    },
+    {
+      "code": "suppliers.delete",
+      "groupName": "Nhà cung cấp",
+      "name": "Xóa nhà cung cấp chưa có chứng từ",
+      "sortOrder": 223
+    },
+    {
+      "code": "goods-receipts.view",
+      "groupName": "Phiếu nhập",
+      "name": "Xem, in phiếu nhập",
+      "sortOrder": 230
+    },
+    {
+      "code": "goods-receipts.create",
+      "groupName": "Phiếu nhập",
+      "name": "Lập phiếu nhập",
+      "sortOrder": 231
+    },
+    {
+      "code": "goods-receipts.update",
+      "groupName": "Phiếu nhập",
+      "name": "Sửa, gửi duyệt, rút lại phiếu nhập",
+      "sortOrder": 232
+    },
+    {
+      "code": "goods-receipts.delete",
+      "groupName": "Phiếu nhập",
+      "name": "Hủy phiếu nhập nháp hoặc bị từ chối",
+      "sortOrder": 233
+    },
+    {
+      "code": "goods-receipts.approve",
+      "groupName": "Phiếu nhập",
+      "name": "Duyệt, từ chối phiếu nhập",
+      "sortOrder": 234
+    },
+    {
+      "code": "goods-receipts.reverse",
+      "groupName": "Phiếu nhập",
+      "name": "Tạo phiếu ngược của phiếu nhập",
+      "sortOrder": 235
+    },
+    {
+      "code": "goods-issues.view",
+      "groupName": "Phiếu xuất",
+      "name": "Xem, in phiếu xuất",
+      "sortOrder": 240
+    },
+    {
+      "code": "goods-issues.create",
+      "groupName": "Phiếu xuất",
+      "name": "Lập phiếu xuất",
+      "sortOrder": 241
+    },
+    {
+      "code": "goods-issues.update",
+      "groupName": "Phiếu xuất",
+      "name": "Sửa, gửi duyệt, rút lại phiếu xuất",
+      "sortOrder": 242
+    },
+    {
+      "code": "goods-issues.delete",
+      "groupName": "Phiếu xuất",
+      "name": "Hủy phiếu xuất nháp hoặc bị từ chối",
+      "sortOrder": 243
+    },
+    {
+      "code": "goods-issues.approve",
+      "groupName": "Phiếu xuất",
+      "name": "Duyệt, từ chối phiếu xuất",
+      "sortOrder": 244
+    },
+    {
+      "code": "goods-issues.reverse",
+      "groupName": "Phiếu xuất",
+      "name": "Tạo phiếu ngược của phiếu xuất",
+      "sortOrder": 245
+    },
+    {
+      "code": "transfers.view",
+      "groupName": "Chuyển kho",
+      "name": "Xem, in phiếu chuyển kho",
+      "sortOrder": 250
+    },
+    {
+      "code": "transfers.create",
+      "groupName": "Chuyển kho",
+      "name": "Lập phiếu chuyển kho",
+      "sortOrder": 251
+    },
+    {
+      "code": "transfers.update",
+      "groupName": "Chuyển kho",
+      "name": "Sửa, gửi duyệt, rút lại phiếu chuyển",
+      "sortOrder": 252
+    },
+    {
+      "code": "transfers.delete",
+      "groupName": "Chuyển kho",
+      "name": "Hủy phiếu chuyển nháp hoặc bị từ chối",
+      "sortOrder": 253
+    },
+    {
+      "code": "transfers.approve",
+      "groupName": "Chuyển kho",
+      "name": "Duyệt, từ chối phiếu chuyển",
+      "sortOrder": 254
+    },
+    {
+      "code": "transfers.receive",
+      "groupName": "Chuyển kho",
+      "name": "Xác nhận nhận hàng chuyển đến",
+      "sortOrder": 255
+    },
+    {
+      "code": "stock-levels.view",
+      "groupName": "Tồn kho",
+      "name": "Xem tồn kho, thẻ kho, cảnh báo",
+      "sortOrder": 260
+    },
+    {
+      "code": "stock-values.view",
+      "groupName": "Tồn kho",
+      "name": "Xem giá vốn, giá trị tồn, giá trị xuất",
+      "sortOrder": 261
+    },
+    {
+      "code": "stocktakes.view",
+      "groupName": "Kiểm kê",
+      "name": "Xem phiếu kiểm kê",
+      "sortOrder": 270
+    },
+    {
+      "code": "stocktakes.create",
+      "groupName": "Kiểm kê",
+      "name": "Tạo phiếu kiểm kê",
+      "sortOrder": 271
+    },
+    {
+      "code": "stocktakes.count",
+      "groupName": "Kiểm kê",
+      "name": "Nhập số đếm, gửi duyệt kiểm kê",
+      "sortOrder": 272
+    },
+    {
+      "code": "stocktakes.approve",
+      "groupName": "Kiểm kê",
+      "name": "Duyệt, trả lại đếm lại phiếu kiểm kê",
+      "sortOrder": 273
+    },
+    {
+      "code": "stocktakes.cancel",
+      "groupName": "Kiểm kê",
+      "name": "Hủy phiếu kiểm kê chưa duyệt",
+      "sortOrder": 274
+    },
+    {
+      "code": "reports.view",
+      "groupName": "Báo cáo",
+      "name": "Xem tổng quan quản lý, báo cáo",
+      "sortOrder": 280
+    }
+  ],
+  "roles": [
+    {
+      "code": "MANAGER",
+      "name": "Quản lý kho",
+      "description": "Danh mục hàng hóa, kho, nhà cung cấp; duyệt phiếu nhập, xuất, chuyển, kiểm kê; xem giá vốn, giá trị tồn, báo cáo"
+    },
+    {
+      "code": "STAFF",
+      "name": "Thủ kho",
+      "description": "Lập phiếu nhập, xuất, chuyển; nhận hàng chuyển đến; đếm kiểm kê tại kho được gán; chỉ thấy số lượng"
+    }
+  ],
+  "roleGrants": {
+    "MANAGER": [
+      "products.view",
+      "products.create",
+      "products.update",
+      "products.delete",
+      "warehouses.view",
+      "warehouses.create",
+      "warehouses.update",
+      "warehouses.delete",
+      "warehouses.assign",
+      "suppliers.view",
+      "suppliers.create",
+      "suppliers.update",
+      "suppliers.delete",
+      "goods-receipts.view",
+      "goods-receipts.create",
+      "goods-receipts.update",
+      "goods-receipts.delete",
+      "goods-receipts.approve",
+      "goods-receipts.reverse",
+      "goods-issues.view",
+      "goods-issues.create",
+      "goods-issues.update",
+      "goods-issues.delete",
+      "goods-issues.approve",
+      "goods-issues.reverse",
+      "transfers.view",
+      "transfers.create",
+      "transfers.update",
+      "transfers.delete",
+      "transfers.approve",
+      "transfers.receive",
+      "stock-levels.view",
+      "stock-values.view",
+      "stocktakes.view",
+      "stocktakes.create",
+      "stocktakes.count",
+      "stocktakes.approve",
+      "stocktakes.cancel",
+      "reports.view"
+    ],
+    "STAFF": [
+      "products.view",
+      "warehouses.view",
+      "suppliers.view",
+      "goods-receipts.view",
+      "goods-receipts.create",
+      "goods-receipts.update",
+      "goods-receipts.delete",
+      "goods-issues.view",
+      "goods-issues.create",
+      "goods-issues.update",
+      "goods-issues.delete",
+      "transfers.view",
+      "transfers.create",
+      "transfers.update",
+      "transfers.delete",
+      "transfers.receive",
+      "stock-levels.view",
+      "stocktakes.view",
+      "stocktakes.create",
+      "stocktakes.count"
+    ]
+  },
+  "users": [
+    {
+      "username": "admin",
+      "description": "Phân quyền, tài khoản, gán kho cho thủ kho, tên doanh nghiệp và logo in trên phiếu"
+    },
+    {
+      "username": "quanly",
+      "description": "Tổng quan, duyệt phiếu nhập, xuất, chuyển, kiểm kê; thẻ kho, giá vốn, báo cáo xuất nhập tồn"
+    },
+    {
+      "username": "nhanvien",
+      "description": "Thủ kho Kho tổng Bình Tân và Kho Thủ Đức: lập phiếu nhập, xuất, chuyển, nhận hàng, đếm kiểm kê trên tablet"
+    },
+    {
+      "username": "thukho.bh",
+      "fullName": "Phạm Văn Lực",
+      "email": "thukho.bh@example.com",
+      "phone": "0123456784",
+      "roles": ["STAFF"],
+      "isDemoAccount": true,
+      "quickLogin": false,
+      "sortOrder": 4,
+      "description": "Thủ kho Kho Biên Hòa trong dữ liệu mẫu"
+    }
+  ],
+  "settings": [
+    { "key": "Brand.AppName", "value": "Quản lý Kho", "groupName": "Thương hiệu" },
+    { "key": "Brand.LogoUrl", "value": "/logo/logo-mark.svg", "groupName": "Thương hiệu" },
+    { "key": "Brand.PrimaryColor", "value": "#4338CA", "groupName": "Thương hiệu" },
+    {
+      "key": "Store.Name",
+      "value": "Công ty TNHH Phân phối Tân Lộc Phát",
+      "groupName": "Đơn vị in trên chứng từ"
+    },
+    {
+      "key": "Store.Address",
+      "value": "18 Đường số 7, phường Tân Tạo, TP. Hồ Chí Minh",
+      "groupName": "Đơn vị in trên chứng từ"
+    },
+    { "key": "Store.Phone", "value": "028 3754 2618", "groupName": "Đơn vị in trên chứng từ" },
+    { "key": "Store.TaxCode", "value": "0318246975", "groupName": "Đơn vị in trên chứng từ" },
+    {
+      "key": "Store.DirectorName",
+      "value": "Võ Thành Lộc",
+      "groupName": "Đơn vị in trên chứng từ"
+    },
+    {
+      "key": "Store.ChiefAccountantName",
+      "value": "Ngô Thị Thu Trang",
+      "groupName": "Đơn vị in trên chứng từ"
+    }
+  ],
   "homeAfterLogin": "/dashboard"
 }
